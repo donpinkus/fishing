@@ -139,9 +139,10 @@ MonoBehaviour:
   minD: -4
   maxD: -50
   rarity: 0.8
-  value: 0
-  health: 0
+  moneyValue: 10
+  health: 3
   isCaught: 0
   rb: {fileID: 822377334782548431}
   hook: {fileID: 0}
   mainController: {fileID: 0}
+  player: {fileID: 0}

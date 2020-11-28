@@ -13,18 +13,24 @@ public class Fish : MonoBehaviour
     public float maxD;
 
     public float rarity;
-    public float value;
+    public int moneyValue;
     public float health;
 
     public bool isCaught;
 
     public Rigidbody2D rb;
+
     public GameObject hook;
     public GameObject mainController;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
+        hook = GameObject.Find("Hook");
+        mainController = GameObject.Find("MainController");
+        player = GameObject.Find("Player");
+
         float startX = Random.Range(-5, 5);
         float startY = Random.Range(minD, maxD);
         transform.position = new Vector2(startX, startY);
@@ -36,8 +42,7 @@ public class Fish : MonoBehaviour
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
 
-        hook = GameObject.Find("Hook");
-        mainController = GameObject.Find("MainController");
+        
     }
 
     // Update is called once per frame
@@ -66,6 +71,14 @@ public class Fish : MonoBehaviour
 
     void HandleClick(){
         Debug.Log("CLICK!");
+
+        health -= player.GetComponent<Player>().damage;
+
+        if (health <= 0) {
+            player.SendMessage("RecieveMoney", moneyValue);
+            
+            Destroy(gameObject);
+        }
     }
 
     void BeginStage3(){
