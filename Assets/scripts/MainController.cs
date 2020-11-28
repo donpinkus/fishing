@@ -34,9 +34,6 @@ public class MainController : MonoBehaviour
     // Update is called once per frame
     void Update(){
         if (stage == 3 && Input.GetButtonDown("Fire1")) {
-            Debug.Log("FIRE");
-            Debug.Log(Input.mousePosition); // Returns X, Y in pixels from bottom left. 
-
             Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             GameObject newExplosion = Instantiate(explosion, new Vector3(point.x, point.y, 0f), transform.rotation);

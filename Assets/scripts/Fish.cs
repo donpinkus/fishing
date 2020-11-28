@@ -64,6 +64,10 @@ public class Fish : MonoBehaviour
         }
     }
 
+    void HandleClick(){
+        Debug.Log("CLICK!");
+    }
+
     void BeginStage3(){
         if (isCaught) {
             Launch();
