@@ -7,7 +7,10 @@ public class MainController : MonoBehaviour
     public GameObject railCamera;
     public GameObject hook;
     
+    public GameObject explosion; 
+
     public GameObject fishA;
+    public GameObject[] fishes;
 
     public int stage;
 
@@ -16,12 +19,10 @@ public class MainController : MonoBehaviour
 
     private float fishSpawnedDepth;
 
-    public GameObject[] fishes;
-
     // Start is called before the first frame update
     void Start(){
         minDepth = 0;
-        maxDepth = 100; // TODO: update as line gets longer
+        maxDepth = 100; // TODO: update as fishing line gets longer
 
         stage = 1;
 
@@ -34,6 +35,13 @@ public class MainController : MonoBehaviour
     void Update(){
         if (Input.GetButtonDown("Fire1")) {
             Debug.Log("FIRE");
+            Debug.Log(Input.mousePosition); // Returns X, Y in pixels from bottom left. 
+
+            Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            GameObject newExplosion = Instantiate(explosion, new Vector3(point.x, point.y, 0f), transform.rotation);
+            
+            Destroy(newExplosion, 20f);
         }
     }
 
