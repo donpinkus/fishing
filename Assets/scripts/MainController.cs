@@ -12,23 +12,17 @@ public class MainController : MonoBehaviour
     public GameObject fishA;
     public GameObject[] fishes;
 
+    public GameObject scoreScreen;
+    private GameObject scoreScreenInstance;
+
     public int stage;
 
     public float minDepth;
     public float maxDepth;
 
-    private float fishSpawnedDepth;
-
     // Start is called before the first frame update
     void Start(){
-        minDepth = 0;
-        maxDepth = 100; // TODO: update as fishing line gets longer
-
-        stage = 1;
-
-        SpawnFish();
-
-        fishes = GameObject.FindGameObjectsWithTag("fish");
+        StartLevel();
     }
 
     // Update is called once per frame
@@ -40,6 +34,33 @@ public class MainController : MonoBehaviour
             
             Destroy(newExplosion, 20f);
         }
+    }
+
+    public void ClearLevel(){
+        if (scoreScreenInstance) {
+            Destroy(scoreScreenInstance);
+        }
+
+        // Get rid of fish.
+        fishes = GameObject.FindGameObjectsWithTag("fish");
+        
+        foreach (GameObject fish in fishes) {
+            Destroy(fish);
+        }
+    }
+
+    void StartLevel(){
+        ClearLevel();
+
+        minDepth = 0;
+        maxDepth = 100; // TODO: update as fishing line gets longer
+
+        Camera.main.GetComponent<Transform>().position = new Vector2(0, 0);
+
+        stage = 1;
+
+        SpawnFish();
+        fishes = GameObject.FindGameObjectsWithTag("fish");
     }
 
     void SpawnFish(){
@@ -65,6 +86,13 @@ public class MainController : MonoBehaviour
         foreach (GameObject fish in fishes) {
             fish.SendMessage("BeginStage3");
         }
+    }
+
+    // Score screen
+    void BeginStage4(){
+        stage = 4;
+
+        scoreScreenInstance = Instantiate(scoreScreen);
     }
 }
 

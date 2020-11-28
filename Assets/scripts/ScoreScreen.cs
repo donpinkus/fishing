@@ -10,11 +10,13 @@ public class ScoreScreen : MonoBehaviour
     public Text bankText;
 
     public GameObject Player;
+    public GameObject MainController;
 
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.Find("Player");
+        MainController = GameObject.Find("MainController");
         
         // Render at 0,0 relative to camera.
         float y = Camera.main.GetComponent<Transform>().position.y;

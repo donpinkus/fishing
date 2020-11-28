@@ -27,16 +27,14 @@ public class RailCamera : MonoBehaviour
             
         } else if (stage == 3) {
             // If stage 3, follow lowest fish pos
-            GameObject[] fishes = MainController.GetComponent<MainController>().fishes;
+            GameObject[] fishes = GameObject.FindGameObjectsWithTag("fish");
 
             float lowestY = -1f;
             foreach(GameObject fish in fishes) {
-                if (fish) { // TODO: we do this since uncaught fish will be Destroy()'d.
-                    float y = fish.GetComponent<Transform>().position.y;
+                float y = fish.GetComponent<Transform>().position.y;
 
-                    if (lowestY == -1 || y < lowestY) {
-                        lowestY = y;
-                    }
+                if (lowestY == -1 || y < lowestY) {
+                    lowestY = y;
                 }
             }
 
@@ -46,6 +44,14 @@ public class RailCamera : MonoBehaviour
             }
 
             transform.position = new Vector3(transform.position.x, lowestY, transform.position.z);
+
+            // If no fish remain, show score screen
+            if (fishes.Length == 0) {
+                MainController.SendMessage("BeginStage4");
+            }
+            
+        } else if (stage == 4) {
+            rb.velocity = Vector2.zero;
         }
     }
 
@@ -61,12 +67,12 @@ public class RailCamera : MonoBehaviour
     }
 
     void BeginStage2(){
-        rb.velocity = new Vector2(0, 0);
+        rb.velocity = Vector2.zero;
         rb.AddForce(new Vector2(0, speed));
     }
 
     void BeginStage3(){
         // Pin camera to lowest fish's height.
-        rb.velocity = new Vector2(0, 0);
+        rb.velocity = Vector2.zero;
     }
 }

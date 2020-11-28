@@ -41,7 +41,7 @@ public class Hook : MonoBehaviour
             if (transform.position.y >= 0) {
                 mainController.SendMessage("BeginStage3");
             }
-        } else if (stage == 3) {
+        } else if (stage == 3 || stage == 4) {
             transform.position = new Vector3(transform.position.x, 0);
         }
     }

@@ -62,12 +62,14 @@ public class Fish : MonoBehaviour
             if (isCaught) {
                 transform.position = hook.GetComponent<Transform>().position;
             }
+        } else if (stage == 3) {
+            if (transform.position.y < -0.5) {
+                Destroy(gameObject);
+            }
         }
     }
 
     void HandleClick(){
-        Debug.Log("CLICK!");
-
         health -= player.GetComponent<Player>().damage;
 
         if (health <= 0) {

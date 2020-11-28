@@ -299,7 +299,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5724984887129547221}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SendMessage
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: ClearLevel
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5724984887262094371
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,7 +609,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5724984887963790124}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -3.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
