@@ -40,9 +40,7 @@ public class Fish : MonoBehaviour
 
         if (v < 0) {
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        }
-
-        
+        }    
     }
 
     // Update is called once per frame
@@ -57,8 +55,6 @@ public class Fish : MonoBehaviour
         if (transform.position.x < -5) {
             transform.position = new Vector2(5, transform.position.y);
         }
-
-        
 
         int stage = mainController.GetComponent<MainController>().stage;
 
@@ -76,7 +72,7 @@ public class Fish : MonoBehaviour
 
         if (health <= 0) {
             player.SendMessage("RecieveMoney", moneyValue);
-            
+
             Destroy(gameObject);
         }
     }
