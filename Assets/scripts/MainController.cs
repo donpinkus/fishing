@@ -36,7 +36,7 @@ public class MainController : MonoBehaviour
         }
     }
 
-    public void ClearLevel(){
+    void ClearLevel(){
         if (scoreScreenInstance) {
             Destroy(scoreScreenInstance);
         }
@@ -49,7 +49,7 @@ public class MainController : MonoBehaviour
         }
     }
 
-    void StartLevel(){
+    public void StartLevel(){
         ClearLevel();
 
         minDepth = 0;
@@ -57,10 +57,12 @@ public class MainController : MonoBehaviour
 
         Camera.main.GetComponent<Transform>().position = new Vector2(0, 0);
 
-        stage = 1;
-
         SpawnFish();
         fishes = GameObject.FindGameObjectsWithTag("fish");
+
+        stage = 1;
+
+        railCamera.SendMessage("BeginStage1");
     }
 
     void SpawnFish(){

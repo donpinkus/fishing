@@ -28,5 +28,6 @@ public class Player : MonoBehaviour
 
     void TransferMoneyToBank(){
         bankMoney += levelMoney;
+        levelMoney = 0;
     }
 }

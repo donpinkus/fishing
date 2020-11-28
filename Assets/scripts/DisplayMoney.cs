@@ -16,6 +16,6 @@ public class DisplayMoney : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        moneyText.text = "$ " + Player.GetComponent<Player>().levelMoney.ToString();
+        moneyText.text = "$ " + Player.GetComponent<Player>().bankMoney.ToString();
     }
 }
