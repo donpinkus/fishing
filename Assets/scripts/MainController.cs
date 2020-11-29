@@ -55,7 +55,7 @@ public class MainController : MonoBehaviour
         minDepth = 0;
         maxDepth = 100; // TODO: update as fishing line gets longer
 
-        Camera.main.GetComponent<Transform>().position = new Vector2(0, 0);
+        // Camera.main.GetComponent<Transform>().position = new Vector2(0, 0);
 
         SpawnFish();
         fishes = GameObject.FindGameObjectsWithTag("fish");

@@ -10,20 +10,20 @@ public class RailCamera : MonoBehaviour
 
     public float speed;
 
-    private float cameraZ;
+    private float cameraZ = -10;
 
     // Start is called before the first frame update
     void Start(){
-        cameraZ = -10;
-
-        BeginStage1();
+        MoveToStartPosition();
     }
 
     // Update is called once per frame
     void Update(){
         int stage = MainController.GetComponent<MainController>().stage;
 
-        if (stage == 2) {
+        if (stage == 1) {
+
+        } else if (stage == 2) {
             
         } else if (stage == 3) {
             // If stage 3, follow lowest fish pos
@@ -60,10 +60,15 @@ public class RailCamera : MonoBehaviour
     }
 
     void BeginStage1(){
+        MoveToStartPosition();
+
+        rb.velocity = Vector2.zero;
+        rb.AddForce(new Vector2(0, -speed));
+    }
+
+    void MoveToStartPosition(){
         float cameraOffset = -1 * Hook.GetComponent<Hook>().trip1YOffset;
         transform.position = new Vector3(0, cameraOffset, cameraZ);
-
-        rb.AddForce(new Vector2(0, -speed));
     }
 
     void BeginStage2(){
