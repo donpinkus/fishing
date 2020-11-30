@@ -8,61 +8,41 @@ public class Hook : MonoBehaviour
 {
     public Rigidbody2D rb;
 
-    public float trip1YOffset;
-    public float trip2YOffset;
-
     public GameObject mainController;
-    public GameObject railCamera;
     public GameObject GyroManager;
 
     public Text debugText;
 
     private int stage; // Read from MainController.
 
-    void Start()
-    {
-        // Move Hook to starting position, which is relative to the camera.
-        float camY = railCamera.GetComponent<Transform>().position.y;
+    public float vertSpeed;
+    public float currentDepth; // World space depth.
 
-        transform.position = new Vector2(0, camY + trip1YOffset);
-    }
+    void Start(){}
 
-    void Update() {
-
-    }
+    void Update(){}
 
     void FixedUpdate(){
         stage = mainController.GetComponent<MainController>().stage;
 
-        float newY = GetYPositionRelativeToCamera();
+        // float newY = GetYPositionRelativeToCamera();
         float newX = transform.position.x;
 
         if (stage == 1 || stage == 2) {
             newX = GetXPositionFromGyro();
         } 
 
-        if (stage == 2) {
+        if (stage == 1) {
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Lerp(rb.velocity.y, -vertSpeed, 0.02f));
+        } else if (stage == 2) {
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Lerp(rb.velocity.y, vertSpeed, 0.02f));
+
             if (transform.position.y >= 0) {
-                mainController.SendMessage("BeginStage3");
+                mainController.SendMessage("ChangeStage", 3);
             }
         }
 
-        transform.position = new Vector2(newX, newY);
-    }
-
-    float GetYPositionRelativeToCamera(){
-        float camY = railCamera.GetComponent<Transform>().position.y;
-        float newY = 0;
-
-        if (stage == 1) {
-            newY = camY + trip1YOffset;
-        } else if (stage == 2) {
-            newY = camY + trip2YOffset;
-        } else if (stage == 3 || stage == 4) {
-            newY = 0;
-        }
-
-        return newY;
+        transform.position = new Vector2(newX, transform.position.y);
     }
 
     // Gets the gyroscope and sets the x position based on it. Between 330 degree (rotated right) and 30 degree (rotated left). 0 degree is straight up.
@@ -100,13 +80,29 @@ public class Hook : MonoBehaviour
         if (other.CompareTag("fish")) {
             // If descending, stop
             if (mainController.GetComponent<MainController>().stage == 1) {
-                mainController.SendMessage("BeginStage2");
+                mainController.SendMessage("ChangeStage", 2);
             }
 
             // Catch the fish
             other.GetComponent<Fish>().isCaught = true;
             other.GetComponent<Transform>().transform.RotateAround(transform.position, new Vector3(0, 0, 1), Random.Range(55, 135));
+        }
+    }
 
+    void HandleStageChange(int stage){
+        switch (stage) {
+            case 1:
+                transform.position = new Vector2(0, 0);
+                break;
+            case 2:
+                break;
+            case 3:
+                rb.velocity = Vector2.zero;
+                break;
+            case 4:
+                break;
+            default: 
+                break;
         }
     }
 }

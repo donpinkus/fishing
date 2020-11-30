@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Fish : MonoBehaviour {
-    public float v;
-    // public float minV;
     public float maxV;
 
-    public float d;
     public float minD;
     public float maxD;
 
@@ -35,15 +32,15 @@ public class Fish : MonoBehaviour {
         float startY = Random.Range(minD, maxD);
         transform.position = new Vector2(startX, startY);
 
-        v = Random.Range(-maxV, maxV);
-        rb.velocity = new Vector2(v, 0);
+        float horizontalV = Random.Range(-maxV, maxV);
+        rb.velocity = new Vector2(horizontalV, 0);
 
-        if (v < 0) {
+        // Make fish face in the right direction for swim velocity.
+        if (horizontalV < 0) {
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }    
     }
 
-    // Update is called once per frame
     void Update() {
         int stage = mainController.GetComponent<MainController>().stage;
 
@@ -84,6 +81,27 @@ public class Fish : MonoBehaviour {
         }
     }
 
+    void HandleStageChange(int stage) {
+        switch (stage) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                // isCaught ? Launch() : Destroy(gameObject);
+                if (isCaught) {
+                    Launch();
+                } else {
+                    Destroy(gameObject);
+                }
+                break;
+            case 4:
+                break;
+            default:
+                break;
+        }
+    }
+
     void HandleClick(){
         // Decrease health by player damage
         health -= player.GetComponent<Player>().damage;
@@ -100,16 +118,10 @@ public class Fish : MonoBehaviour {
         Destroy(newExplosion, 20f);
     }
 
-    void BeginStage3(){
-        if (isCaught) {
-            Launch();
-        } else {            
-            Destroy(gameObject);
-        }
-    }
-
-    // Launches fish out of water at stage 3
+    // Launches fish out of water.
     void Launch(){
+        Debug.Log("launch!");
+
         rb.velocity = new Vector2(0, 0);
 
         float forceX = Random.Range(0, 100);

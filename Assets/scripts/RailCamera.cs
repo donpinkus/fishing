@@ -5,30 +5,20 @@ using UnityEngine;
 public class RailCamera : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public float speed;
 
-    [SerializeField]
-    private float cameraZ = -10;
+    [SerializeField] private float cameraZ = -10;
+    public GameObject Hook;
+    public GameObject MainController;
 
-    [SerializeField]
-    private GameObject Hook;
+    void Start(){}
 
-    [SerializeField]
-    private GameObject MainController;
-
-    // Start is called before the first frame update
-    void Start(){
-        MoveToStartPosition();
-    }
-
-    // Update is called once per frame
     void Update(){
         int stage = MainController.GetComponent<MainController>().stage;
 
         if (stage == 1) {
-
+            transform.position = new Vector3(0, Hook.GetComponent<Transform>().position.y - 3.33f, cameraZ);
         } else if (stage == 2) {
-            
+            transform.position = new Vector3(0, Hook.GetComponent<Transform>().position.y + 3.33f, cameraZ);
         } else if (stage == 3) {
             // If stage 3, follow lowest fish pos
             GameObject[] fishes = GameObject.FindGameObjectsWithTag("fish");
@@ -47,40 +37,24 @@ public class RailCamera : MonoBehaviour
                 lowestY = 3.33f;
             }
 
-            transform.position = new Vector3(transform.position.x, (float)lowestY, transform.position.z);
-
-            // If no fish remain, show score screen
-            if (fishes.Length == 0) {
-                MainController.SendMessage("BeginStage4");
-            }
+            transform.position = new Vector3(transform.position.x, (float)lowestY, cameraZ);
         } else if (stage == 4) {
             rb.velocity = Vector2.zero;
         }
     }
 
-    void FixedUpdate(){
-        
-    }
-
-    void BeginStage1(){
-        MoveToStartPosition();
-
-        rb.velocity = Vector2.zero;
-        rb.AddForce(new Vector2(0, -speed));
-    }
-
-    void MoveToStartPosition(){
-        float cameraOffset = -1 * Hook.GetComponent<Hook>().trip1YOffset;
-        transform.position = new Vector3(0, cameraOffset, cameraZ);
-    }
-
-    void BeginStage2(){
-        rb.velocity = Vector2.zero;
-        rb.AddForce(new Vector2(0, speed));
-    }
-
-    void BeginStage3(){
-        // Pin camera to lowest fish's height.
-        rb.velocity = Vector2.zero;
+    void HandleStageChange(int stage) {
+        switch (stage) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                break;
+        }
     }
 }

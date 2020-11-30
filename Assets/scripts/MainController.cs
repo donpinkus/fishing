@@ -3,39 +3,75 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MainController : MonoBehaviour
-{
-    public GameObject railCamera;
-    public GameObject hook;
-    
+{    
     public GameObject explosion; 
 
     public GameObject fishA;
     public GameObject fishB;
 
-    public GameObject[] fishes;
-
     public GameObject scoreScreen;
     private GameObject scoreScreenInstance;
 
-    public int stage;
+    public int stage = 0;
 
-    public float minDepth;
-    public float maxDepth;
+    public float minDepth = 0;
+    public float maxDepth = 100;
 
-    // Start is called before the first frame update
     void Start(){
-        StartLevel();
+        ChangeStage(1);
     }
 
-    // Update is called once per frame
     void Update(){
-        if (stage == 3 && Input.GetButtonDown("Fire1")) {
-            Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (stage == 3) {
+            if (Input.GetButtonDown("Fire1")) {
+                Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            GameObject newExplosion = Instantiate(explosion, new Vector3(point.x, point.y, 0f), transform.rotation);
+                GameObject newExplosion = Instantiate(explosion, new Vector3(point.x, point.y, 0f), transform.rotation);
+                
+                Destroy(newExplosion, 20f);
+            }
+
+            // If no fish remain, show score screen
+            GameObject[] fishes = GameObject.FindGameObjectsWithTag("fish");
             
-            Destroy(newExplosion, 20f);
+            if (fishes.Length == 0) ChangeStage(4);
         }
+    }
+
+    void ChangeStage(int newStage) {
+        Debug.Log("ChangeStage: " + newStage);
+
+        stage = newStage;
+
+        HandleStageChange(stage);
+
+        BroadcastMessage("HandleStageChange", stage);
+    }
+
+    // Stage 1 - comes from this controller's Start.
+    // Stage 2 - comes from Hook, when it detects collision with a fish.
+    // Stage 3 - comes from Hook, when it reaches the surface.
+    // Stage 4 - comes from this controller's Update, when no fishes remain. 
+    void HandleStageChange(int stage){
+        switch (stage) {
+            case 1:
+                StartLevel();
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                scoreScreenInstance = Instantiate(scoreScreen);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void StartLevel(){
+        ClearLevel();
+        SpawnFish();
     }
 
     void ClearLevel(){
@@ -44,31 +80,15 @@ public class MainController : MonoBehaviour
         }
 
         // Get rid of fish.
-        fishes = GameObject.FindGameObjectsWithTag("fish");
+        GameObject[] fishes = GameObject.FindGameObjectsWithTag("fish");
         
         foreach (GameObject fish in fishes) {
             Destroy(fish);
         }
     }
 
-    public void StartLevel(){
-        ClearLevel();
-
-        minDepth = 0;
-        maxDepth = 100; // TODO: update as fishing line gets longer
-
-        // Camera.main.GetComponent<Transform>().position = new Vector2(0, 0);
-
-        SpawnFish();
-        fishes = GameObject.FindGameObjectsWithTag("fish");
-
-        stage = 1;
-
-        railCamera.SendMessage("BeginStage1");
-    }
-
     void SpawnFish(){
-        int maxFish = 300;
+        int maxFish = 100;
         int curFish = 0;
 
         // Loop through fish
@@ -82,40 +102,15 @@ public class MainController : MonoBehaviour
         float val = (float)Random.Range(0, 100) / 100f;
         float rarity = fish.GetComponent<Fish>().rarity;
 
-        Debug.Log("V: " + val + " R: " + rarity);
-        Debug.Log("curfish: " + curFish);
+        // Debug.Log("V: " + val + " R: " + rarity);
+        // Debug.Log("curfish: " + curFish);
 
         if (val < rarity && curFish < maxFish) {
             curFish++;
 
-            Instantiate(fish);
+            Instantiate(fish, transform);
             RecursiveSpawn(fish, maxFish, curFish);
         }     
-    }
-
-    void BeginStage2(){
-        stage = 2;
-
-        railCamera.SendMessage("BeginStage2");
-    }
-
-    void BeginStage3(){
-        stage = 3;
-
-        railCamera.SendMessage("BeginStage3");
-
-        fishes = GameObject.FindGameObjectsWithTag("fish");
-
-        foreach (GameObject fish in fishes) {
-            fish.SendMessage("BeginStage3");
-        }
-    }
-
-    // Score screen
-    void BeginStage4(){
-        stage = 4;
-
-        scoreScreenInstance = Instantiate(scoreScreen);
     }
 }
 

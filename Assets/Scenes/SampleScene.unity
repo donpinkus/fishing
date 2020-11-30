@@ -296,7 +296,6 @@ MonoBehaviour:
   explosion: {fileID: 1188935394734474, guid: 26f7267be1acd7e47a0144e301dc600c, type: 3}
   fishA: {fileID: 1478693309701390231, guid: 8b8c1edc50124453f918fc8096424705, type: 3}
   fishB: {fileID: 1478693309701390231, guid: f96677a779d234362a0844e41ee67a42, type: 3}
-  fishes: []
   scoreScreen: {fileID: 5724984887963790124, guid: 78d2b2d91f76f4ef994ffd658603cd90,
     type: 3}
   stage: 0
@@ -594,7 +593,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 519420030}
-  speed: 120
   cameraZ: -10
   Hook: {fileID: 1915347154}
   MainController: {fileID: 412342134}
@@ -1265,13 +1263,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1915347158}
-  trip1YOffset: 3.33
-  trip2YOffset: -3.33
   mainController: {fileID: 412342134}
   railCamera: {fileID: 519420028}
   GyroManager: {fileID: 1046644000}
   debugText: {fileID: 621473534}
-  smoothSpeed: 0.3
+  vertSpeed: 120
+  currentDepth: 0
 --- !u!50 &1915347158
 Rigidbody2D:
   serializedVersion: 4
