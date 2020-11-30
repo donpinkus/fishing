@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 505133753}
   - component: {fileID: 505133755}
   - component: {fileID: 505133754}
+  - component: {fileID: 505133756}
   m_Layer: 5
   m_Name: Max Depth
   m_TagString: Untagged
@@ -474,6 +475,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505133752}
   m_CullTransparentMesh: 0
+--- !u!114 &505133756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505133752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2384ab3f0850440dd9c6a39b0b7eab13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 2114312975}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,7 +1353,7 @@ MonoBehaviour:
   damage: 1
   levelMoney: 0
   bankMoney: 0
-  maxDepth: 10
+  maxDepth: 50
 --- !u!4 &2114312977
 Transform:
   m_ObjectHideFlags: 0
