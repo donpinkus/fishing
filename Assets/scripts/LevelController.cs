@@ -11,6 +11,8 @@ public class LevelController : MonoBehaviour
 
     public GameObject scoreScreen;
     private GameObject scoreScreenInstance;
+    public GameObject MaxDepthMarker;
+    public GameObject Player;
 
     public int stage = 0;
 
@@ -69,6 +71,7 @@ public class LevelController : MonoBehaviour
     public void StartLevel(){
         ClearLevel();
         SpawnFish();
+        PlaceMaxDepthMarker();
     }
 
     void ClearLevel(){
@@ -108,6 +111,12 @@ public class LevelController : MonoBehaviour
             Instantiate(fish, transform);
             RecursiveSpawn(fish, maxFish, curFish);
         }     
+    }
+
+    void PlaceMaxDepthMarker(){
+        float maxDepth = Player.GetComponent<Player>().maxDepth;
+
+        MaxDepthMarker.GetComponent<Transform>().position = new Vector2(0, -maxDepth);
     }
 }
 
