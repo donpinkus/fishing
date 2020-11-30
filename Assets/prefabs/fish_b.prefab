@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1478693309701390231}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.618, y: 1.184, z: -0.3789835}
-  m_LocalScale: {x: 0.48957917, y: 0.48957917, z: 0.48957917}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.48957917}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,9 +73,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bc31af1dd9b17483d9dd8cbb895efde1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 96802149a8d6b4f1b9d4fddb5f252b66, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1.66, y: 0.75}
@@ -115,11 +115,11 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.024119364, y: 0.0000001797448}
-  m_Size: {x: 1.5796034, y: 0.7105638}
+  m_Offset: {x: -0.09594478, y: -0.086711645}
+  m_Size: {x: 3.4853995, y: 3.0451813}
   m_Direction: 1
 --- !u!114 &-2937059537988138201
 MonoBehaviour:
@@ -133,8 +133,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0ffa6162dbb248688a5546f4360efd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minV: 1
-  maxV: 10
-  minD: 5
-  maxD: 50
-  rarity: 0.3
+  v: 0
+  maxV: 1.1
+  d: 0
+  minD: -5
+  maxD: -100
+  rarity: 0.98
+  moneyValue: 30
+  health: 3
+  isCaught: 0
+  rb: {fileID: 822377334782548431}
+  hook: {fileID: 0}
+  mainController: {fileID: 0}
+  player: {fileID: 0}
+  explosion: {fileID: 1397483401404738, guid: e66f79c7854600e46b8bb82a6bdee10e, type: 3}

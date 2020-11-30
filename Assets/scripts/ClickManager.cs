@@ -24,7 +24,7 @@ public class ClickManager : MonoBehaviour
             if (hit.collider != null) {
                 Debug.Log(hit.collider.gameObject.name);
 
-                hit.collider.gameObject.SendMessage("HandleClick");
+                hit.collider.gameObject.SendMessage("HandleClick", mousePos2D);
             }
         }
     }

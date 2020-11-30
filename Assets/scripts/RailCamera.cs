@@ -5,12 +5,16 @@ using UnityEngine;
 public class RailCamera : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public GameObject Hook;
-    public GameObject MainController;
-
     public float speed;
 
+    [SerializeField]
     private float cameraZ = -10;
+
+    [SerializeField]
+    private GameObject Hook;
+
+    [SerializeField]
+    private GameObject MainController;
 
     // Start is called before the first frame update
     void Start(){
@@ -29,27 +33,26 @@ public class RailCamera : MonoBehaviour
             // If stage 3, follow lowest fish pos
             GameObject[] fishes = GameObject.FindGameObjectsWithTag("fish");
 
-            float lowestY = -1f;
+            float? lowestY = null;
             foreach(GameObject fish in fishes) {
                 float y = fish.GetComponent<Transform>().position.y;
 
-                if (lowestY == -1 || y < lowestY) {
+                if ((!lowestY.HasValue || y < lowestY) && y > 3.33) {
                     lowestY = y;
                 }
             }
 
             // The fish will launch when camera is at 3.33, so avoid chopping back down to 0.
-            if (lowestY < 3.33) {
+            if (lowestY < 3.33 || !lowestY.HasValue) {
                 lowestY = 3.33f;
             }
 
-            transform.position = new Vector3(transform.position.x, lowestY, transform.position.z);
+            transform.position = new Vector3(transform.position.x, (float)lowestY, transform.position.z);
 
             // If no fish remain, show score screen
             if (fishes.Length == 0) {
                 MainController.SendMessage("BeginStage4");
             }
-            
         } else if (stage == 4) {
             rb.velocity = Vector2.zero;
         }

@@ -10,6 +10,8 @@ public class MainController : MonoBehaviour
     public GameObject explosion; 
 
     public GameObject fishA;
+    public GameObject fishB;
+
     public GameObject[] fishes;
 
     public GameObject scoreScreen;
@@ -66,12 +68,29 @@ public class MainController : MonoBehaviour
     }
 
     void SpawnFish(){
-        for (int i = 0; i < 200; i++) {
-            Instantiate(fishA);
-        }
+        int maxFish = 300;
+        int curFish = 0;
 
-        // Alternatives
-        // Depth bands - Spawn at a depth range, roll the dice to continue spawning fish, where more fish less likely to continue spawning. Move to next depth. 
+        // Loop through fish
+        RecursiveSpawn(fishA, maxFish, curFish);
+        RecursiveSpawn(fishB, maxFish, curFish);
+    }
+
+    void RecursiveSpawn(GameObject fish, int maxFish, int curFish) {
+        // If the range value is LESS than the rarity, spawn again.
+        // So a rarity of 0.9 gives a 90% chance of spawning again. 
+        float val = (float)Random.Range(0, 100) / 100f;
+        float rarity = fish.GetComponent<Fish>().rarity;
+
+        Debug.Log("V: " + val + " R: " + rarity);
+        Debug.Log("curfish: " + curFish);
+
+        if (val < rarity && curFish < maxFish) {
+            curFish++;
+
+            Instantiate(fish);
+            RecursiveSpawn(fish, maxFish, curFish);
+        }     
     }
 
     void BeginStage2(){
@@ -84,6 +103,8 @@ public class MainController : MonoBehaviour
         stage = 3;
 
         railCamera.SendMessage("BeginStage3");
+
+        fishes = GameObject.FindGameObjectsWithTag("fish");
 
         foreach (GameObject fish in fishes) {
             fish.SendMessage("BeginStage3");
