@@ -16,17 +16,17 @@ public class Fish : MonoBehaviour {
 
     public Rigidbody2D rb;
 
-    public GameObject hook;
-    public GameObject levelController;
-    public GameObject player;
+    public GameObject Hook;
+    public GameObject LevelController;
+    public GameObject Player;
 
     public GameObject explosion;
 
     // Start is called before the first frame update
     void Start() {
-        hook = GameObject.Find("Hook");
-        levelController = GameObject.Find("LevelController");
-        player = GameObject.Find("Player");
+        Hook = GameObject.Find("Hook");
+        LevelController = GameObject.Find("LevelController");
+        Player = GameObject.Find("Player");
 
         float startX = Random.Range(-5, 5);
         float startY = Random.Range(minD, maxD);
@@ -42,7 +42,7 @@ public class Fish : MonoBehaviour {
     }
 
     void Update() {
-        int stage = levelController.GetComponent<LevelController>().stage;
+        int stage = LevelController.GetComponent<LevelController>().stage;
 
         if (stage == 1 || stage == 2) {
             // Wrap the fishies!
@@ -55,9 +55,9 @@ public class Fish : MonoBehaviour {
                 transform.position = new Vector2(5, transform.position.y);
             }
      
-            // Stick fish to the hook.
+            // Stick fish to the Hook.
             if (isCaught) {
-                transform.position = hook.GetComponent<Transform>().position;
+                transform.position = Hook.GetComponent<Transform>().position;
             }
         } else if (stage == 3) {
             // If the fish is going to go off screen while flying, bounce it backwards.
@@ -88,7 +88,6 @@ public class Fish : MonoBehaviour {
             case 2:
                 break;
             case 3:
-                // isCaught ? Launch() : Destroy(gameObject);
                 if (isCaught) {
                     Launch();
                 } else {
@@ -103,14 +102,14 @@ public class Fish : MonoBehaviour {
     }
 
     void HandleClick(){
-        int stage = levelController.GetComponent<LevelController>().stage;
+        int stage = LevelController.GetComponent<LevelController>().stage;
 
         if (stage == 3 && transform.position.y > 0) {
-            // Decrease health by player damage
-            health -= player.GetComponent<Player>().damage;
+            // Decrease health by Player damage
+            health -= Player.GetComponent<Player>().damage;
 
             if (health <= 0) {
-                player.SendMessage("RecieveMoney", moneyValue);
+                Player.SendMessage("RecieveMoney", moneyValue);
                 Destroy(gameObject);
             }
 

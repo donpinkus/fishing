@@ -10,6 +10,7 @@ public class Hook : MonoBehaviour
 
     public GameObject LevelController;
     public GameObject GyroManager;
+    public GameObject Player;
 
     // public Text debugText;
 
@@ -20,7 +21,13 @@ public class Hook : MonoBehaviour
 
     void Start(){}
 
-    void Update(){}
+    void Update(){
+        currentDepth = Mathf.Floor(-transform.position.y);
+
+        if (currentDepth >= Player.GetComponent<Player>().maxDepth) {
+            LevelController.SendMessage("ChangeStage", 2);
+        }
+    }
 
     void FixedUpdate(){
         stage = LevelController.GetComponent<LevelController>().stage;

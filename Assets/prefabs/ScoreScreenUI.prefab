@@ -194,9 +194,8 @@ GameObject:
   - component: {fileID: 5724984887129547220}
   - component: {fileID: 5724984887129547221}
   - component: {fileID: 5724984887129547218}
-  - component: {fileID: 4888721356366163758}
   m_Layer: 5
-  m_Name: Go Fish Btn
+  m_Name: GoFishBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -312,18 +311,6 @@ MonoBehaviour:
           m_StringArgument: ClearLevel
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4888721356366163758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5724984887129547216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4b788860891a4f558b607c682800203, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5724984887262094371
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +480,7 @@ GameObject:
   - component: {fileID: 5724984887572314013}
   - component: {fileID: 5724984887572314010}
   m_Layer: 5
-  m_Name: Shop Btn
+  m_Name: ShopBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -645,7 +632,9 @@ MonoBehaviour:
   catchText: {fileID: 5724984887405867654}
   bankText: {fileID: 5724984887116360280}
   Player: {fileID: 0}
-  MainController: {fileID: 0}
+  LevelController: {fileID: 0}
+  GoFishBtn: {fileID: 0}
+  ShopBtn: {fileID: 0}
 --- !u!1 &5724984888110650088
 GameObject:
   m_ObjectHideFlags: 0

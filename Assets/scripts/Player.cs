@@ -9,19 +9,13 @@ public class Player : MonoBehaviour
     public int levelMoney;
     public int bankMoney;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int maxDepth;
 
-    // Update is called once per frame
-    void Update() {
-        
-    }
+    void Start(){}
+
+    void Update(){}
 
     void RecieveMoney(int moneyValue){
-        Debug.Log("RECIEVED MONEY: " + moneyValue);
         levelMoney += moneyValue;
     }
 

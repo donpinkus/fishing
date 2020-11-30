@@ -16,9 +16,17 @@ public class RailCamera : MonoBehaviour
         int stage = LevelController.GetComponent<LevelController>().stage;
 
         if (stage == 1) {
-            transform.position = new Vector3(0, Hook.GetComponent<Transform>().position.y - 3.33f, cameraZ);
+            float newY = Hook.GetComponent<Transform>().position.y - 3.33f;
+            transform.position = new Vector3(0, newY, cameraZ);
         } else if (stage == 2) {
-            transform.position = new Vector3(0, Hook.GetComponent<Transform>().position.y + 3.33f, cameraZ);
+            float newY = Hook.GetComponent<Transform>().position.y + 3.33f;
+
+            Vector3 targetPos = new Vector3(transform.position.x, newY, cameraZ);
+            Vector3 velocity = rb.velocity;
+
+            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, 0.1f);
+
+            // transform.position = new Vector3(0, Hook.GetComponent<Transform>().position.y + 3.33f, cameraZ);
         } else if (stage == 3) {
             // If stage 3, follow lowest fish pos
             GameObject[] fishes = GameObject.FindGameObjectsWithTag("fish");

@@ -18,7 +18,7 @@ public class CurrentDepthText : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        float currentDepth = Mathf.Floor(Mathf.Abs(Hook.GetComponent<Transform>().position.y));
+        float currentDepth = Hook.GetComponent<Hook>().currentDepth;
 
         if (currentDepth > maxAchievedDepth) {
             maxAchievedDepth = currentDepth;

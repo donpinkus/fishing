@@ -14,9 +14,6 @@ public class LevelController : MonoBehaviour
 
     public int stage = 0;
 
-    public float minDepth = 0;
-    public float maxDepth = 100;
-
     void Start(){
         ChangeStage(1);
     }
