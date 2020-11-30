@@ -17,7 +17,7 @@ public class Fish : MonoBehaviour {
     public Rigidbody2D rb;
 
     public GameObject hook;
-    public GameObject mainController;
+    public GameObject levelController;
     public GameObject player;
 
     public GameObject explosion;
@@ -25,7 +25,7 @@ public class Fish : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         hook = GameObject.Find("Hook");
-        mainController = GameObject.Find("MainController");
+        levelController = GameObject.Find("LevelController");
         player = GameObject.Find("Player");
 
         float startX = Random.Range(-5, 5);
@@ -42,7 +42,7 @@ public class Fish : MonoBehaviour {
     }
 
     void Update() {
-        int stage = mainController.GetComponent<MainController>().stage;
+        int stage = levelController.GetComponent<LevelController>().stage;
 
         if (stage == 1 || stage == 2) {
             // Wrap the fishies!
@@ -103,19 +103,23 @@ public class Fish : MonoBehaviour {
     }
 
     void HandleClick(){
-        // Decrease health by player damage
-        health -= player.GetComponent<Player>().damage;
+        int stage = levelController.GetComponent<LevelController>().stage;
 
-        if (health <= 0) {
-            player.SendMessage("RecieveMoney", moneyValue);
-            Destroy(gameObject);
+        if (stage == 3 && transform.position.y > 0) {
+            // Decrease health by player damage
+            health -= player.GetComponent<Player>().damage;
+
+            if (health <= 0) {
+                player.SendMessage("RecieveMoney", moneyValue);
+                Destroy(gameObject);
+            }
+
+            // Bounce the fish upwards
+            rb.AddForce(new Vector2(0, Random.Range(130, 180)));
+
+            GameObject newExplosion = Instantiate(explosion, new Vector3(transform.position.x, transform.position.y, 0f), transform.rotation);
+            Destroy(newExplosion, 20f);
         }
-
-        // Bounce the fish upwards
-        rb.AddForce(new Vector2(0, Random.Range(130, 180)));
-
-        GameObject newExplosion = Instantiate(explosion, new Vector3(transform.position.x, transform.position.y, 0f), transform.rotation);
-        Destroy(newExplosion, 20f);
     }
 
     // Launches fish out of water.

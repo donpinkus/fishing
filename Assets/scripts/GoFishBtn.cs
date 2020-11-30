@@ -11,7 +11,7 @@ public class GoFishBtn : MonoBehaviour
         Button btn = gameObject.GetComponent<Button>();
         
         btn.onClick.AddListener(() => {
-            GameObject.Find("MainController").GetComponent<MainController>().StartLevel();
+            GameObject.Find("LevelController").SendMessage("ChangeStage", 1);
             GameObject.Find("Player").SendMessage("TransferMoneyToBank");
         });
     }

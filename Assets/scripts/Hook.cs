@@ -8,12 +8,12 @@ public class Hook : MonoBehaviour
 {
     public Rigidbody2D rb;
 
-    public GameObject mainController;
+    public GameObject LevelController;
     public GameObject GyroManager;
 
-    public Text debugText;
+    // public Text debugText;
 
-    private int stage; // Read from MainController.
+    private int stage; // Read from LevelController.
 
     public float vertSpeed;
     public float currentDepth; // World space depth.
@@ -23,7 +23,7 @@ public class Hook : MonoBehaviour
     void Update(){}
 
     void FixedUpdate(){
-        stage = mainController.GetComponent<MainController>().stage;
+        stage = LevelController.GetComponent<LevelController>().stage;
 
         // float newY = GetYPositionRelativeToCamera();
         float newX = transform.position.x;
@@ -38,7 +38,7 @@ public class Hook : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Lerp(rb.velocity.y, vertSpeed, 0.02f));
 
             if (transform.position.y >= 0) {
-                mainController.SendMessage("ChangeStage", 3);
+                LevelController.SendMessage("ChangeStage", 3);
             }
         }
 
@@ -71,7 +71,7 @@ public class Hook : MonoBehaviour
         Vector2 velocity = rb.velocity;
         Vector2 smoothedPos = Vector2.SmoothDamp(transform.position, targetPosition, ref velocity, 0.15f);
 
-        debugText.text = "GyroYAng: " + yAngle + " \nGyroX: " + x + " \nsmX: " + transform.position.x;
+        // debugText.text = "GyroYAng: " + yAngle + " \nGyroX: " + x + " \nsmX: " + transform.position.x;
 
         return smoothedPos.x;
     }
@@ -79,8 +79,8 @@ public class Hook : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) { 
         if (other.CompareTag("fish")) {
             // If descending, stop
-            if (mainController.GetComponent<MainController>().stage == 1) {
-                mainController.SendMessage("ChangeStage", 2);
+            if (LevelController.GetComponent<LevelController>().stage == 1) {
+                LevelController.SendMessage("ChangeStage", 2);
             }
 
             // Catch the fish

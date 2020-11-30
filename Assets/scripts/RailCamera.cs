@@ -8,12 +8,12 @@ public class RailCamera : MonoBehaviour
 
     [SerializeField] private float cameraZ = -10;
     public GameObject Hook;
-    public GameObject MainController;
+    public GameObject LevelController;
 
     void Start(){}
 
     void Update(){
-        int stage = MainController.GetComponent<MainController>().stage;
+        int stage = LevelController.GetComponent<LevelController>().stage;
 
         if (stage == 1) {
             transform.position = new Vector3(0, Hook.GetComponent<Transform>().position.y - 3.33f, cameraZ);
@@ -27,7 +27,9 @@ public class RailCamera : MonoBehaviour
             foreach(GameObject fish in fishes) {
                 float y = fish.GetComponent<Transform>().position.y;
 
-                if ((!lowestY.HasValue || y < lowestY) && y > 3.33) {
+                // We check if y > 0, so we still allow fish below the camera to be focused.
+                // Fish below the water we're ok to move away from.
+                if ((!lowestY.HasValue || y < lowestY) && y > 0) {
                     lowestY = y;
                 }
             }
@@ -37,7 +39,10 @@ public class RailCamera : MonoBehaviour
                 lowestY = 3.33f;
             }
 
-            transform.position = new Vector3(transform.position.x, (float)lowestY, cameraZ);
+            Vector3 targetPos = new Vector3(transform.position.x, (float)lowestY, cameraZ);
+            Vector3 velocity = rb.velocity;
+
+            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, 0.075f); 
         } else if (stage == 4) {
             rb.velocity = Vector2.zero;
         }
